@@ -5,6 +5,7 @@ export enum EmployeeListActionType {
     SET_EMPLOYEE_LIST = 'SET_EMPLOYEE_LIST',
     SET_LABEL_FOR_EMPLOYEE = 'SET_LABEL_FOR_EMPLOYEE',
     SET_BACKGROUND_COLOR_FOR_EMPLOYEE = 'SET_BACKGROUND_COLOR_FOR_EMPLOYEE',
+    SET_SEARCH_QUERY = 'SET_SEARCH_QUERY',
 }
 
 export const setEmployeeList = (list: Employee[]) => (dispatch: Dispacher) => {
@@ -17,4 +18,8 @@ export const setLabelForEmployee = (index: number, label: string) => (dispatch: 
 
 export const setBackgroundColorForEmployee = (index: number, color: string) => (dispatch: Dispacher) => {
 	return dispatch({ type: EmployeeListActionType.SET_BACKGROUND_COLOR_FOR_EMPLOYEE, payload: { index, color } });
+};
+
+export const setSearchQuery = (query: string) => (dispatch: Dispacher) => {
+	return dispatch({ type: EmployeeListActionType.SET_SEARCH_QUERY, payload: query });
 };

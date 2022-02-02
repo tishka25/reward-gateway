@@ -8,6 +8,7 @@ export interface Employee extends EmployeeEntity{
 }
 export interface EmployeeListState {
     employeeList: Employee[];
+	searchQuery?: string;
 }
 const initialState: EmployeeListState = {
 	employeeList: []
@@ -30,6 +31,9 @@ export default function (state = initialState, action: Action): EmployeeListStat
 		const newEmployees = [...state.employeeList];
 		newEmployees[payload.index].color = payload.color;
 		return { ...state, employeeList: newEmployees };
+	}
+	case EmployeeListActionType.SET_SEARCH_QUERY:{
+		return { ...state, searchQuery: payload };
 	}
 	default:
 		return state;
