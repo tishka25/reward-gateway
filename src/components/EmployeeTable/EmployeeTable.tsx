@@ -1,4 +1,4 @@
-import { Button, Dropdown, Input, Menu, Space, Table } from 'antd';
+import { Button, Space, Table } from 'antd';
 import React, { useState } from 'react';
 import { Employee } from '../../redux/reducers/employeeListReducer';
 import BackgroundColorDropDown from '../EmployeeColorPicker/EmployeeColorPicker';
@@ -52,7 +52,7 @@ function EmployeeTable(props: EmployeeTableProps) {
 	function renderActions(uuid: string) {
 		return (
 			<Space>
-				<BackgroundColorDropDown />
+				<BackgroundColorDropDown employeeUuid={uuid}/>
 				<Button type="primary" onClick={()=>setOpenModalParams({ uuid })}>Edit Label</Button>
 			</Space>
 
@@ -84,6 +84,14 @@ function EmployeeTable(props: EmployeeTableProps) {
 				pagination={getPagination()}
 				columns={defaultColumns}
 				scroll={{ y: getTableHeight() }}
+				// Update background color based on empoyee data.color prop
+				onRow={(data) => {
+					return {
+						style: {
+							backgroundColor: data.color,
+						}
+					};
+				}}
 				expandable={{
 					expandedRowRender: record => <p style={{ margin: 0 }}>Label: {record.label}</p>,
 					rowExpandable: record => record.label !== undefined,
