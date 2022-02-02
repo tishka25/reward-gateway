@@ -3,18 +3,16 @@ import { Dropdown, Menu } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducers } from '../../redux';
 import { setBackgroundColorForEmployee } from '../../redux/actions/employeeListAction';
+import { findEmployeeById } from '../../utils';
 
 export interface BackgroundColorDropDownProps {
     employeeUuid?: string;
 }
 function BackgroundColorDropDown(props: BackgroundColorDropDownProps) {
 	const employeeList = useSelector((s: RootReducers) => s.employeeListReducer.employeeList);
-	const currentEmployeeIndex = useMemo(()=>findCurrentEmployee(), [props.employeeUuid]);
+	const currentEmployeeIndex = useMemo(()=>findEmployeeById(employeeList, props.employeeUuid), [props.employeeUuid]);
 	const dispatch = useDispatch();
 
-	function findCurrentEmployee(){
-		return employeeList.findIndex((e) => e.uuid === props.employeeUuid);
-	}
 	const defaultColors = {
 		red: 'red',
 		blue: 'blue',

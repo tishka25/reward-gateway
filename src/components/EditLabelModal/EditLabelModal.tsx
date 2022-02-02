@@ -3,6 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducers } from '../../redux';
 import { setLabelForEmployee } from '../../redux/actions/employeeListAction';
+import { findEmployeeById } from '../../utils';
 import './style.css';
 
 export interface EditLabelModalProps {
@@ -12,13 +13,9 @@ export interface EditLabelModalProps {
 }
 function EditLabelModal(props: EditLabelModalProps) {
 	const employeeList = useSelector((s: RootReducers) => s.employeeListReducer.employeeList);
-	const currentEmployeeIndex = useMemo(()=>findCurrentEmployee(), [props.employeeUuid]);
+	const currentEmployeeIndex = useMemo(()=>findEmployeeById(employeeList, props.employeeUuid), [props.employeeUuid]);
 	const [newLabel, setNewLabel] = useState(getCurrentLabel());
 	const dispatch = useDispatch();
-
-	function findCurrentEmployee(){
-		return employeeList.findIndex((e) => e.uuid === props.employeeUuid);
-	}
 
 	function getCurrentLabel() {
 		if(currentEmployeeIndex === -1){
