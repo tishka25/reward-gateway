@@ -4,6 +4,7 @@ import { Action } from '../types';
 
 export interface Employee extends EmployeeEntity{
     label?: string;
+    color?: string;
 }
 export interface EmployeeListState {
     employeeList: Employee[];
@@ -23,6 +24,11 @@ export default function (state = initialState, action: Action): EmployeeListStat
 	case EmployeeListActionType.SET_LABEL_FOR_EMPLOYEE:{
 		const newEmployees = [...state.employeeList];
 		newEmployees[payload.index].label = payload.label;
+		return { ...state, employeeList: newEmployees };
+	}
+	case EmployeeListActionType.SET_BACKGROUND_COLOR_FOR_EMPLOYEE:{
+		const newEmployees = [...state.employeeList];
+		newEmployees[payload.index].color = payload.color;
 		return { ...state, employeeList: newEmployees };
 	}
 	default:
