@@ -1,14 +1,17 @@
-import { Table } from 'antd';
-import React from 'react';
-import { EmployeeEntity } from '../../service/rewardGatewayService';
+import { Button, Dropdown, Input, Menu, Space, Table } from 'antd';
+import React, { useState } from 'react';
+import { Employee } from '../../redux/reducers/employeeListReducer';
+import BackgroundColorDropDown from '../EmployeeColorPicker/EmployeeColorPicker';
+import EditLabelModal from '../EditLabelModal/EditLabelModal';
 import ExpandableAvatar from '../ExpandableAvatar/ExpandableAvatar';
 import './style.css';
 
 export interface EmployeeTableProps {
-    employees: EmployeeEntity[],
+    employees: Employee[],
     pagination?: number;
 }
 function EmployeeTable(props: EmployeeTableProps) {
+	const [openModalParams, setOpenModalParams] = useState<{ uuid: string } | undefined>(undefined);
 	const defaultPagination = 20;
 	const defaultColumns = [
 		{
@@ -38,7 +41,23 @@ function EmployeeTable(props: EmployeeTableProps) {
 			key: 'bio',
 			render: (bio: string) => <span dangerouslySetInnerHTML={{__html: bio}} />
 		},
+		{
+			title: 'Action',
+			dataIndex: 'uuid',
+			key: 'action',
+			render: renderActions
+		}
 	];
+
+	function renderActions(uuid: string) {
+		return (
+			<Space>
+				<BackgroundColorDropDown />
+				<Button type="primary" onClick={()=>setOpenModalParams({ uuid })}>Edit Label</Button>
+			</Space>
+
+		);
+	}
 
 	function getData() {
 		return props.employees.map(e=>{
@@ -58,7 +77,21 @@ function EmployeeTable(props: EmployeeTableProps) {
 	function getTableHeight() {
 		return window.innerHeight * 0.7;
 	}
-	return <Table dataSource={getData()} pagination={getPagination()} columns={defaultColumns} scroll={{ y: getTableHeight() }}/>;
+	return (
+		<>
+			<Table 
+				dataSource={getData()} 
+				pagination={getPagination()}
+				columns={defaultColumns}
+				scroll={{ y: getTableHeight() }}
+				expandable={{
+					expandedRowRender: record => <p style={{ margin: 0 }}>Label: {record.label}</p>,
+					rowExpandable: record => record.label !== undefined,
+				}} 
+			/>
+			<EditLabelModal visible={!!openModalParams} employeeUuid={openModalParams?.uuid} onFinish={() => setOpenModalParams(undefined)}/>
+		</>
+	);
 }
 
 export default EmployeeTable;
