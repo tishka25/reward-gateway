@@ -1,6 +1,7 @@
 import { Table } from 'antd';
 import React from 'react';
 import { EmployeeEntity } from '../../service/rewardGatewayService';
+import ExpandableAvatar from '../ExpandableAvatar/ExpandableAvatar';
 import './style.css';
 
 export interface EmployeeTableProps {
@@ -10,6 +11,12 @@ export interface EmployeeTableProps {
 function EmployeeTable(props: EmployeeTableProps) {
 	const defaultPagination = 20;
 	const defaultColumns = [
+		{
+			title: 'Avatar',
+			dataIndex: 'avatar',
+			key: 'avatar',
+			render: (uri: string) => <ExpandableAvatar uri={uri} />
+		},
 		{
 			title: 'Name',
 			dataIndex: 'name',
