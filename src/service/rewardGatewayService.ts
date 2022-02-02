@@ -1,5 +1,13 @@
 import { Service } from './service';
 
+export interface EmployeeEntity {
+	uuid: string,
+	company: string,
+	bio: string,
+	name: string,
+	title: string,
+	avatar: string
+}
 class RewardGatewayService extends Service{
 	private defaultEndpoint = 'https://hiring.rewardgateway.net';
 	private defaultCredentials = {
