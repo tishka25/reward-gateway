@@ -11,5 +11,5 @@ export const setEmployeeList = (list: Employee[]) => (dispatch: Dispacher) => {
 };
 
 export const setLabelForEmployee = (index: number, label: string) => (dispatch: Dispacher) => {
-	return dispatch({ type: EmployeeListActionType.SET_EMPLOYEE_LIST, payload: { index, label } });
+	return dispatch({ type: EmployeeListActionType.SET_LABEL_FOR_EMPLOYEE, payload: { index, label } });
 };

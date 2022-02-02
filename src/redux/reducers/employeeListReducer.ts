@@ -21,8 +21,9 @@ export default function (state = initialState, action: Action): EmployeeListStat
 		return { ...state, employeeList: payload};
 	}
 	case EmployeeListActionType.SET_LABEL_FOR_EMPLOYEE:{
-		state.employeeList[payload.index] = payload.label;
-		return { ...state, employeeList: [...state.employeeList] };
+		const newEmployees = [...state.employeeList];
+		newEmployees[payload.index].label = payload.label;
+		return { ...state, employeeList: newEmployees };
 	}
 	default:
 		return state;
