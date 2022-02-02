@@ -1,6 +1,5 @@
 import { Button, Space, Table } from 'antd';
-import React, { useState } from 'react';
-import { Employee } from '../../redux/reducers/employeeListReducer';
+import React, { useEffect, useState } from 'react';
 import BackgroundColorDropDown from '../EmployeeColorPicker/EmployeeColorPicker';
 import EditLabelModal from '../EditLabelModal/EditLabelModal';
 import ExpandableAvatar from '../ExpandableAvatar/ExpandableAvatar';
@@ -12,7 +11,8 @@ export interface EmployeeTableProps {
     pagination?: number;
 }
 function EmployeeTable(props: EmployeeTableProps) {
-	const employees = useSelector((s: RootReducers) => s.employeeListReducer.employeeList);
+	const employeeListReducer = useSelector((s: RootReducers) => s.employeeListReducer);
+	const [localEmployeeList, setLocalEmployeeList] = useState(employeeListReducer.employeeList);
 	const [openModalParams, setOpenModalParams] = useState<{ uuid: string } | undefined>(undefined);
 	const defaultPagination = 20;
 	const defaultColumns = [
@@ -51,6 +51,18 @@ function EmployeeTable(props: EmployeeTableProps) {
 		}
 	];
 
+	useEffect(()=>{
+		if(employeeListReducer.searchQuery && employeeListReducer.searchQuery !== '') {
+			setLocalEmployeeList(employeeListReducer.employeeList.filter((e) => {
+				if(e.label && employeeListReducer.searchQuery && e.label.includes(employeeListReducer.searchQuery)) {
+					return e;
+				}
+			}));
+		} else {
+			setLocalEmployeeList(employeeListReducer.employeeList);
+		}
+	}, [employeeListReducer.searchQuery]);
+
 	function renderActions(uuid: string) {
 		return (
 			<Space>
@@ -62,7 +74,7 @@ function EmployeeTable(props: EmployeeTableProps) {
 	}
 
 	function getData() {
-		return employees.map(e=>{
+		return localEmployeeList.map(e=>{
 			return {
 				...e,
 				key: e.uuid,
@@ -81,8 +93,8 @@ function EmployeeTable(props: EmployeeTableProps) {
 	}
 	return (
 		<>
-			<Table 
-				dataSource={getData()} 
+			<Table
+				dataSource={getData()}
 				pagination={getPagination()}
 				columns={defaultColumns}
 				scroll={{ y: getTableHeight() }}
@@ -97,7 +109,7 @@ function EmployeeTable(props: EmployeeTableProps) {
 				expandable={{
 					expandedRowRender: record => <p style={{ margin: 0 }}>Label: {record.label}</p>,
 					rowExpandable: record => record.label !== undefined,
-				}} 
+				}}
 			/>
 			<EditLabelModal visible={!!openModalParams} employeeUuid={openModalParams?.uuid} onFinish={() => setOpenModalParams(undefined)}/>
 		</>

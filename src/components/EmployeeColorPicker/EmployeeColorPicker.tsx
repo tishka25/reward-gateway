@@ -19,7 +19,7 @@ function BackgroundColorDropDown(props: BackgroundColorDropDownProps) {
 		grey: 'grey'
 	};
 	function handleColorSelect(colorType: string & 'custom') {
-		if(colorType === 'custom' || currentEmployeeIndex === -1){
+		if(colorType === 'custom' || currentEmployeeIndex === -1) {
 			return;
 		}
 		dispatch(setBackgroundColorForEmployee(currentEmployeeIndex, colorType));
@@ -30,7 +30,7 @@ function BackgroundColorDropDown(props: BackgroundColorDropDownProps) {
 	}
 
 	function renderDropdownMenu () {
-		return (	
+		return (
 			<Menu onClick={({ key }) => handleColorSelect(key as any)} style={{ width: 'calc(100% + 40px)' }}>
 				{Object.entries(defaultColors).map(([key,value]) => renderColorListItem(key, value))}
 				<Menu.Item key="custom">Custom</Menu.Item>

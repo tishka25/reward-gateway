@@ -8,7 +8,7 @@ export interface EmployeeEntity {
 	title: string,
 	avatar: string
 }
-class RewardGatewayService extends Service{
+class RewardGatewayService extends Service {
 	private defaultEndpoint = 'https://hiring.rewardgateway.net';
 	private defaultCredentials = {
 		username: 'medium',

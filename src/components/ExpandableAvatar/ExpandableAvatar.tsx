@@ -10,7 +10,7 @@ function ExpandableAvatar(props: ExpandableAvatarProps) {
 	const [expanded, setExpanded] = useState(false);
 
 	useEffect(()=>{
-		if(props.expanded !== expanded){
+		if(props.expanded !== expanded) {
 			setExpanded(!!props.expanded);
 		}
 	}, [props.expanded]);

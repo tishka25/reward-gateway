@@ -8,7 +8,7 @@ import { RootReducers } from './redux';
 import { setEmployeeList } from './redux/actions/employeeListAction';
 import rewardGatewayService from './service/rewardGatewayService';
 
-function App() {
+function App () {
 	const dispatch = useDispatch();
 	const employeeList = useSelector((s: RootReducers) => s.employeeListReducer.employeeList);
 
@@ -18,7 +18,7 @@ function App() {
 			dispatch(setEmployeeList(employees));
 		})();
 	}, []);
-  
+
 	return (
 		<div className="App">
 			<PageHeader />

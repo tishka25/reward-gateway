@@ -18,7 +18,7 @@ function EditLabelModal(props: EditLabelModalProps) {
 	const dispatch = useDispatch();
 
 	function getCurrentLabel() {
-		if(currentEmployeeIndex === -1){
+		if(currentEmployeeIndex === -1) {
 			return undefined;
 		}
 		return employeeList[currentEmployeeIndex].label;
@@ -29,7 +29,7 @@ function EditLabelModal(props: EditLabelModalProps) {
 	}
 
 	function handleSubmit() {
-		if(currentEmployeeIndex !== -1 && newLabel){
+		if(currentEmployeeIndex !== -1 && newLabel) {
 			dispatch(setLabelForEmployee(currentEmployeeIndex, newLabel));
 		}
 		props.onFinish && props.onFinish();
