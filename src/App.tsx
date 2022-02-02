@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import EmployeeTable from './components/EmployeeTable/EmployeeTable';
 import PageHeader from './components/PageHeader/PageHeader';
+import { RootReducers } from './redux';
+import { setEmployeeList } from './redux/actions/employeeListAction';
 import rewardGatewayService, { EmployeeEntity } from './service/rewardGatewayService';
 
 function App() {
-	const [employees, setEmployees] = useState<EmployeeEntity[]>([]);
+	const dispatch = useDispatch();
+	const employeeList = useSelector((s: RootReducers) => s.employeeListReducer.employeeList);
+
 	useEffect(() => {
 		(async ()=>{
-			setEmployees(await rewardGatewayService.getEmployeeList());
+			const employees = await rewardGatewayService.getEmployeeList();
+			dispatch(setEmployeeList(employees));
 		})();
 	}, []);
   
 	return (
 		<div className="App">
 			<PageHeader />
-			<EmployeeTable employees={employees}/>
+			<EmployeeTable employees={employeeList}/>
 		</div>
 	);
 }
