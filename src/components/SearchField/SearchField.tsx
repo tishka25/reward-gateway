@@ -6,8 +6,8 @@ export interface SearchFieldProps {
     width?: string | number;
     value?: string;
     placeholder: string;
-    onChange?: (value: string) => string;
-    onFinishEdit?: (value: string) => string;
+    onChange?: (value: string) => void;
+    onFinishEdit?: (value: string) => void;
 }
 function SearchField(props: SearchFieldProps) {
 	const [currentValue, setCurrentValue] = useState(props.value || '');
