@@ -1,3 +1,4 @@
+import { Skeleton } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
@@ -21,7 +22,7 @@ function App() {
 	return (
 		<div className="App">
 			<PageHeader />
-			<EmployeeTable employees={employeeList}/>
+			{employeeList.length ? <EmployeeTable employees={employeeList}/> : <Skeleton active />}
 		</div>
 	);
 }
