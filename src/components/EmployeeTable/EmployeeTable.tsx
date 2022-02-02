@@ -56,7 +56,7 @@ function EmployeeTable(props: EmployeeTableProps) {
 	}
 
 	function getTableHeight() {
-		return window.innerHeight * 0.8;
+		return window.innerHeight * 0.7;
 	}
 	return <Table dataSource={getData()} pagination={getPagination()} columns={defaultColumns} scroll={{ y: getTableHeight() }}/>;
 }
