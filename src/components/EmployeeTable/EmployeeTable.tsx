@@ -5,12 +5,14 @@ import BackgroundColorDropDown from '../EmployeeColorPicker/EmployeeColorPicker'
 import EditLabelModal from '../EditLabelModal/EditLabelModal';
 import ExpandableAvatar from '../ExpandableAvatar/ExpandableAvatar';
 import './style.css';
+import { useSelector } from 'react-redux';
+import { RootReducers } from '../../redux';
 
 export interface EmployeeTableProps {
-    employees: Employee[],
     pagination?: number;
 }
 function EmployeeTable(props: EmployeeTableProps) {
+	const employees = useSelector((s: RootReducers) => s.employeeListReducer.employeeList);
 	const [openModalParams, setOpenModalParams] = useState<{ uuid: string } | undefined>(undefined);
 	const defaultPagination = 20;
 	const defaultColumns = [
@@ -60,7 +62,7 @@ function EmployeeTable(props: EmployeeTableProps) {
 	}
 
 	function getData() {
-		return props.employees.map(e=>{
+		return employees.map(e=>{
 			return {
 				...e,
 				key: e.uuid,

@@ -22,7 +22,7 @@ function App() {
 	return (
 		<div className="App">
 			<PageHeader />
-			{employeeList.length ? <EmployeeTable employees={employeeList}/> : <Skeleton active />}
+			{employeeList.length ? <EmployeeTable /> : <Skeleton active />}
 		</div>
 	);
 }
