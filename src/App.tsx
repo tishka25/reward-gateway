@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import EmployeeTable from './components/EmployeeTable/EmployeeTable';
+import PageHeader from './components/PageHeader/PageHeader';
 import rewardGatewayService, { EmployeeEntity } from './service/rewardGatewayService';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   
 	return (
 		<div className="App">
+			<PageHeader />
 			<EmployeeTable employees={employees}/>
 		</div>
 	);
