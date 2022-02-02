@@ -3,7 +3,7 @@ import { Dropdown, Menu } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducers } from '../../redux';
 import { setBackgroundColorForEmployee } from '../../redux/actions/employeeListAction';
-import './style.css';
+
 export interface BackgroundColorDropDownProps {
     employeeUuid?: string;
 }

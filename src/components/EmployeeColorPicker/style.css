@@ -1,5 +1,0 @@
-/* Override ant table hover background color */
-.ant-table-tbody > tr.ant-table-row:hover > td {
-    background: none !important;
-    opacity: 0.8;
-}

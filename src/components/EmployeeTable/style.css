@@ -1,0 +1,4 @@
+/* Override ant table hover background color */
+.ant-table-tbody > tr.ant-table-row:hover > td {
+    background: rgba(206, 206, 206, 0.2) !important;
+}
