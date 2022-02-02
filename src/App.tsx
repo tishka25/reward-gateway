@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import EmployeeTable from './components/EmployeeTable/EmployeeTable';
 import PageHeader from './components/PageHeader/PageHeader';
 import { RootReducers } from './redux';
 import { setEmployeeList } from './redux/actions/employeeListAction';
-import rewardGatewayService, { EmployeeEntity } from './service/rewardGatewayService';
+import rewardGatewayService from './service/rewardGatewayService';
 
 function App() {
 	const dispatch = useDispatch();
