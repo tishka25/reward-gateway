@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
-
+import defaultIcon from './reward-gateway-logo.jpeg';
 export interface ExpandableAvatarProps {
     uri: string;
     expanded?: boolean;
@@ -23,9 +23,13 @@ function ExpandableAvatar(props: ExpandableAvatarProps) {
 		setExpanded(!expanded);
 	}
 
+	function handleImageError(e: React.SyntheticEvent<HTMLImageElement>) {
+		e.currentTarget.src = defaultIcon;
+	}
+
 	return (
 		<div className={getClassName()} onClick={toggleExpanded}>
-			<img src={'https://picsum.photos/200/300'}/>
+			<img src={props.uri} onError={handleImageError} />
 		</div>
 	);
 }
