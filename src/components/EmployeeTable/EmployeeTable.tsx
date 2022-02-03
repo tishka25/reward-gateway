@@ -1,16 +1,18 @@
-import { Button, Space, Table } from 'antd';
+import { Button, Skeleton, Space, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import BackgroundColorDropDown from '../EmployeeColorPicker/EmployeeColorPicker';
 import EditLabelModal from '../EditLabelModal/EditLabelModal';
 import ExpandableAvatar from '../ExpandableAvatar/ExpandableAvatar';
 import './style.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootReducers } from '../../redux';
+import { getEmployeeList } from '../../redux/actions/employeeListAction';
 
 export interface EmployeeTableProps {
     pagination?: number;
 }
 function EmployeeTable(props: EmployeeTableProps) {
+	const dispatch = useDispatch();
 	const employeeListReducer = useSelector((s: RootReducers) => s.employeeListReducer);
 	const [localEmployeeList, setLocalEmployeeList] = useState(employeeListReducer.employeeList);
 	const [openModalParams, setOpenModalParams] = useState<{ uuid: string } | undefined>(undefined);
@@ -52,6 +54,10 @@ function EmployeeTable(props: EmployeeTableProps) {
 	];
 
 	useEffect(()=>{
+		dispatch(getEmployeeList());
+	}, []);
+
+	useEffect(()=>{
 		if(employeeListReducer.searchQuery && employeeListReducer.searchQuery !== '') {
 			setLocalEmployeeList(employeeListReducer.employeeList.filter((e) => {
 				if(e.label && employeeListReducer.searchQuery && e.label.includes(employeeListReducer.searchQuery)) {
@@ -61,7 +67,7 @@ function EmployeeTable(props: EmployeeTableProps) {
 		} else {
 			setLocalEmployeeList(employeeListReducer.employeeList);
 		}
-	}, [employeeListReducer.searchQuery]);
+	}, [employeeListReducer.searchQuery, employeeListReducer.employeeList]);
 
 	function renderActions(uuid: string) {
 		return (
@@ -91,28 +97,35 @@ function EmployeeTable(props: EmployeeTableProps) {
 	function getTableHeight() {
 		return window.innerHeight * 0.7;
 	}
+
+	function renderTableView() {
+		return (
+			<>
+				<Table
+					dataSource={getData()}
+					pagination={getPagination()}
+					columns={defaultColumns}
+					scroll={{ y: getTableHeight() }}
+					// Update background color based on empoyee data.color prop
+					onRow={(data) => {
+						return {
+							style: {
+								backgroundColor: data.color,
+							}
+						};
+					}}
+					expandable={{
+						expandedRowRender: record => <p style={{ margin: 0 }}>Label: {record.label}</p>,
+						rowExpandable: record => record.label !== undefined,
+					}}
+				/>
+				<EditLabelModal visible={!!openModalParams} employeeUuid={openModalParams?.uuid} onFinish={() => setOpenModalParams(undefined)}/>
+			</>
+		);
+	}
+
 	return (
-		<>
-			<Table
-				dataSource={getData()}
-				pagination={getPagination()}
-				columns={defaultColumns}
-				scroll={{ y: getTableHeight() }}
-				// Update background color based on empoyee data.color prop
-				onRow={(data) => {
-					return {
-						style: {
-							backgroundColor: data.color,
-						}
-					};
-				}}
-				expandable={{
-					expandedRowRender: record => <p style={{ margin: 0 }}>Label: {record.label}</p>,
-					rowExpandable: record => record.label !== undefined,
-				}}
-			/>
-			<EditLabelModal visible={!!openModalParams} employeeUuid={openModalParams?.uuid} onFinish={() => setOpenModalParams(undefined)}/>
-		</>
+		!employeeListReducer.employeeList.length ? <Skeleton active /> : renderTableView()
 	);
 }
 

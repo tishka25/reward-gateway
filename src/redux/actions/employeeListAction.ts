@@ -1,12 +1,20 @@
+import rewardGatewayService from '../../service/rewardGatewayService';
 import { Employee } from '../reducers/employeeListReducer';
 import { Dispacher } from '../types';
 
 export enum EmployeeListActionType {
+    GET_EMPLOYEE_LIST = 'GET_EMPLOYEE_LIST',
     SET_EMPLOYEE_LIST = 'SET_EMPLOYEE_LIST',
     SET_LABEL_FOR_EMPLOYEE = 'SET_LABEL_FOR_EMPLOYEE',
     SET_BACKGROUND_COLOR_FOR_EMPLOYEE = 'SET_BACKGROUND_COLOR_FOR_EMPLOYEE',
     SET_SEARCH_QUERY = 'SET_SEARCH_QUERY',
 }
+
+export const getEmployeeList = () => (dispatch: Dispacher) => {
+	rewardGatewayService.getEmployeeList().then((employeeList) => {
+		dispatch({ type: EmployeeListActionType.GET_EMPLOYEE_LIST, payload: employeeList });
+	});
+};
 
 export const setEmployeeList = (list: Employee[]) => (dispatch: Dispacher) => {
 	return dispatch({ type: EmployeeListActionType.SET_EMPLOYEE_LIST, payload: list });

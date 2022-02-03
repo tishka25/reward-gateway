@@ -19,9 +19,9 @@ export default function (state = initialState, action: Action): EmployeeListStat
 	const payload = action.payload;
 
 	switch (type) {
-	case EmployeeListActionType.SET_EMPLOYEE_LIST:{
+	case EmployeeListActionType.GET_EMPLOYEE_LIST:
+	case EmployeeListActionType.SET_EMPLOYEE_LIST:
 		return { ...state, employeeList: payload};
-	}
 	case EmployeeListActionType.SET_LABEL_FOR_EMPLOYEE:{
 		const newEmployees = [...state.employeeList];
 		newEmployees[payload.index].label = payload.label;
