@@ -5,7 +5,7 @@ import icon from './icons8-search.svg';
 export interface SearchFieldProps {
     width?: string | number;
     value?: string;
-    placeholder: string;
+    placeholder?: string;
     onChange?: (value: string) => void;
     onFinishEdit?: (value: string) => void;
 }

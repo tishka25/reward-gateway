@@ -5,10 +5,10 @@ import { RootReducers } from '../../redux';
 import { setBackgroundColorForEmployee } from '../../redux/actions/employeeListAction';
 import { findEmployeeById } from '../../utils/utils';
 
-export interface BackgroundColorDropDownProps {
+export interface EmployeeColorPickerProps {
     employeeUuid?: string;
 }
-function BackgroundColorDropDown(props: BackgroundColorDropDownProps) {
+function EmployeeColorPicker(props: EmployeeColorPickerProps) {
 	const employeeList = useSelector((s: RootReducers) => s.employeeListReducer.employeeList);
 	const currentEmployeeIndex = useMemo(()=>findEmployeeById(employeeList, props.employeeUuid), [props.employeeUuid]);
 	const dispatch = useDispatch();
@@ -26,7 +26,7 @@ function BackgroundColorDropDown(props: BackgroundColorDropDownProps) {
 	}
 
 	function renderColorListItem(name: string, color: string) {
-		return <Menu.Item key={name} style={{ backgroundColor: color, height: 20 }} />;
+		return <Menu.Item key={name} data-testid={name} style={{ backgroundColor: color, height: 20 }} />;
 	}
 
 	function renderDropdownMenu () {
@@ -46,4 +46,4 @@ function BackgroundColorDropDown(props: BackgroundColorDropDownProps) {
 	);
 }
 
-export default BackgroundColorDropDown;
+export default EmployeeColorPicker;
