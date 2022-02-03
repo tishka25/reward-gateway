@@ -60,7 +60,7 @@ function EmployeeTable(props: EmployeeTableProps) {
 	useEffect(()=>{
 		if(employeeListReducer.searchQuery && employeeListReducer.searchQuery !== '') {
 			setLocalEmployeeList(employeeListReducer.employeeList.filter((e) => {
-				if(e.label && employeeListReducer.searchQuery && e.label.includes(employeeListReducer.searchQuery)) {
+				if(e.label && employeeListReducer.searchQuery && e.label.toLowerCase().includes(employeeListReducer.searchQuery.toLowerCase())) {
 					return e;
 				}
 			}));
