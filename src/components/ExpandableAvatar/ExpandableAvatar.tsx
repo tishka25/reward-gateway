@@ -20,7 +20,9 @@ function ExpandableAvatar(props: ExpandableAvatarProps) {
 	}
 
 	function toggleExpanded() {
-		setExpanded(!expanded);
+		const newState = !expanded;
+		setExpanded(newState);
+		props.onExpandChange && props.onExpandChange(newState);
 	}
 
 	function handleImageError(e: React.SyntheticEvent<HTMLImageElement>) {
@@ -28,7 +30,7 @@ function ExpandableAvatar(props: ExpandableAvatarProps) {
 	}
 
 	return (
-		<div className={getClassName()} onClick={toggleExpanded}>
+		<div className={getClassName()} data-testid="image-toggle" onClick={toggleExpanded}>
 			<img src={props.uri} onError={handleImageError} />
 		</div>
 	);
