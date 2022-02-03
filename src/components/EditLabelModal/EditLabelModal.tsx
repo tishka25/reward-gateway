@@ -1,5 +1,5 @@
 import { Input, Modal } from 'antd';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducers } from '../../redux';
 import { setLabelForEmployee } from '../../redux/actions/employeeListAction';
@@ -24,6 +24,11 @@ function EditLabelModal(props: EditLabelModalProps) {
 		return employeeList[currentEmployeeIndex].label;
 	}
 
+	useEffect(() => {
+		setNewLabel(getCurrentLabel());
+	}, [currentEmployeeIndex]);
+
+
 	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
 		setNewLabel(e.target.value);
 	}
@@ -37,7 +42,7 @@ function EditLabelModal(props: EditLabelModalProps) {
 	return (
 		<Modal title="Edit Label" visible={props.visible} onOk={handleSubmit} onCancel={props.onFinish}>
 			<div className="editLabelModal">
-				<Input style={{ width: 'calc(100% - 200px)' }} placeholder="Label" onChange={handleChange} defaultValue={getCurrentLabel()}/>
+				<Input style={{ width: 'calc(100% - 200px)' }} placeholder="Label" onChange={handleChange} value={newLabel} defaultValue={getCurrentLabel()}/>
 			</div>
 		</Modal>
 	);
