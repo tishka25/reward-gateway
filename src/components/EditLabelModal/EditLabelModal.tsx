@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducers } from '../../redux';
 import { setLabelForEmployee } from '../../redux/actions/employeeListAction';
-import { findEmployeeById } from '../../utils';
+import { findEmployeeById } from '../../utils/utils';
 import './style.css';
 
 export interface EditLabelModalProps {
