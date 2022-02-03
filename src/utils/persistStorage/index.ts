@@ -51,6 +51,9 @@ class PersistStorage {
      */
 	getEmployeeConfiguration(employeeList: Employee[]): Employee[] {
 		const configuration = this.get(PersistStorageKey.EMPLOYEE_CONFIGURATION, true);
+		if(!configuration) {
+			return employeeList;
+		}
 		const newEmployeeList = [ ...employeeList ];
 		for(const [uuid, value] of Object.entries(configuration)) {
 			const currentEmployeeIndex = newEmployeeList.findIndex((e) => e.uuid === uuid);
