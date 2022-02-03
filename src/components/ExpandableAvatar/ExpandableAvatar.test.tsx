@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, getByTestId, render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 
@@ -9,12 +9,10 @@ describe('<ExpandableAvatar />', () => {
 	const onExpandChange = jest.fn();
 	const wrapper = render(<ExpandableAvatar uri={defaultImageUri} onExpandChange={onExpandChange} />);
 
-	const imageToggle = document.querySelector('[data-testid=image-toggle]');
-	test('Image should expand when clicked', ()=>{
-		act(()=>{
-			imageToggle?.dispatchEvent(new MouseEvent('click'));
-		});
-		waitFor(()=>{
+	const imageToggle = document.querySelector('[data-testid=image-toggle]')!;
+	test('Image should expand when clicked', async ()=>{
+		fireEvent.click(imageToggle);
+		await waitFor(()=>{
 			expect(onExpandChange).toHaveBeenCalledTimes(1);
 			expect(imageToggle?.classList).toContain('expandableAvatarContainer-expanded');
 		});
