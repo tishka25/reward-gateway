@@ -32,12 +32,12 @@ function EmployeeTable(props: EmployeeTableProps) {
 		{
 			title: 'Company',
 			dataIndex: 'company',
-			key: 'company'
+			key: 'company',
 		},
 		{
 			title: 'Title',
 			dataIndex: 'title',
-			key: 'title'
+			key: 'title',
 		},
 		{
 			title: 'Bio',
@@ -94,8 +94,9 @@ function EmployeeTable(props: EmployeeTableProps) {
 		};
 	}
 
-	function getTableHeight() {
-		return window.innerHeight * 0.7;
+	function getTableSize() {
+		const minWidth = 1280;
+		return { x: minWidth, y: window.innerHeight * 0.7 };
 	}
 
 	function renderTableView() {
@@ -105,7 +106,8 @@ function EmployeeTable(props: EmployeeTableProps) {
 					dataSource={getData()}
 					pagination={getPagination()}
 					columns={defaultColumns}
-					scroll={{ y: getTableHeight() }}
+					scroll={getTableSize()}
+					size="small"
 					// Update background color based on empoyee data.color prop
 					onRow={(data) => {
 						return {
